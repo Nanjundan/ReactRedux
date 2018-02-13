@@ -5,7 +5,7 @@ const cleanWebpackPlugin = require('clean-webpack-plugin');
 const buildPath = path.resolve(__dirname, 'build');
 
 var config = {
-   entry: './src/index.js',
+   entry: './src/scripts/index.js',
    output: {
       path:'/',
       filename: './build/bundle.js',
@@ -18,17 +18,18 @@ var config = {
             exclude: /node_modules/,
             loader: 'babel-loader',
             query: {
-               presets: ['es2015', 'react']
+               presets: ['stage-2','react']
             }
          }
       ]
    },
     plugins: [
+        new cleanWebpackPlugin([buildPath]),
         new copyWebpackPlugin([
             { from: path.join(__dirname, '/src/stylesheets/main.css'), to: path.join(buildPath, '/css') },
             { from: path.join(__dirname, '/src/index.html'), to: buildPath }
         ]),
-        new cleanWebpackPlugin([buildPath])
+        
     ]
 }
 module.exports = config;
